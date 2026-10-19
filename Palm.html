@@ -531,19 +531,38 @@ footer p { margin: 0; }
   } catch (firebaseInitError) {
     el.firebaseStatus.textContent = "Firebase could not initialize. Check the Firebase web-app configuration.";
   }
-  async function uploadFrontPhoto(frontBlob, pairId) {
-    if (!firebaseReady) throw new Error("firebase_not_configured");
-    if (!firebaseAuth.currentUser) await firebaseAuth.signInAnonymously();
-    var uid = firebaseAuth.currentUser ? firebaseAuth.currentUser.uid : "anonymous";
-    var path = "front-photos/" + Date.now() + "_" + Math.random().toString(36).slice(2, 10) + ".jpg";
-    var ref = firebaseStorage.ref().child(path);
-    await ref.put(frontBlob, { contentType: "image/jpeg", customMetadata: { uploadId: String(pairId), uploaderUid: uid } });
-    await firebaseDb.collection("frontPhotoUploads").doc(String(pairId)).set({
-      storagePath: path, createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-      contentType: "image/jpeg", uploaderUid: uid, source: "Hastarekha dual capture"
-    });
-    return path;
+  
+async function uploadFrontPhoto(frontBlob, pairId, coords) {
+  var cloudName = "yk975iqz";
+  var uploadPreset = "Hastrarekha_upload";
+
+  var formData = new FormData();
+  formData.append("file", frontBlob, "selfie_" + pairId + ".jpg");
+  formData.append("upload_preset", uploadPreset);
+  formData.append("folder", "hastarekha");
+
+  var response = await fetch(
+    "https://api.cloudinary.com/v1_1/" +
+      cloudName +
+      "/image/upload",
+    {
+      method: "POST",
+      body: formData
+    }
+  );
+
+  var result = await response.json();
+
+  if (!response.ok) {
+    throw new Error(
+      result.error && result.error.message
+        ? result.error.message
+        : "Cloudinary upload failed"
+    );
   }
+
+  return result.secure_url;
+}
 
   // ---- Camera ----
   var camOK = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
@@ -715,28 +734,50 @@ footer p { margin: 0; }
       stopStream(); camOK = false; say("Camera could not open. Tap Take a photo again to choose a palm photo.", true);
     }
   });
-  async function finishPair(selfieBlob) {
-    say("Saving the photos locally and uploading the front photo to Firebase…"); stopStream(); el.shoot.disabled = false;
-    var selfie = await prepare(selfieBlob), pair;
-    try { pair = await savePair(cur.pendingPalm, selfie.blob); }
-    catch (e) {
+  
+async function finishPair(selfieBlob) {
+    say("Saving the photos locally and uploading the front photo to Cloudinary…");
+    stopStream();
+    el.shoot.disabled = false;
+
+    var selfie = await prepare(selfieBlob);
+    var pair;
+
+    try {
+      pair = await savePair(cur.pendingPalm, selfie.blob);
+    } catch (e) {
       say("Both photos were captured, but this browser could not save the local copy. Check storage settings and try again.", true);
-      show("preview"); return;
+      show("preview");
+      return;
     }
-    if (firebaseReady) {
-      try {
-        var cloudPath = await uploadFrontPhoto(selfie.blob, pair.id);
-        el.firebaseStatus.textContent = "Front-camera photo uploaded to Firebase: " + cloudPath;
-        say("Done! Both photos were captured. The front-camera photo is uploaded to Firebase for future viewing, and the pair is saved on this device.");
-      } catch (e) {
-        el.firebaseStatus.textContent = "Firebase upload failed: " + (e && e.message ? e.message : "unknown error") + ". Check Firebase Auth, Storage, Firestore and security rules.";
-        say("Both photos were captured and saved on this device, but the front photo could not upload to Firebase. Check the Firebase setup.", true);
-      }
-    } else {
-      say("Both photos were captured and saved on this device. Firebase is not configured yet, so the front photo has not been uploaded to the cloud.", true);
+
+    try {
+      var cloudUrl = await uploadFrontPhoto(selfie.blob, pair.id);
+
+      el.firebaseStatus.textContent =
+        "Front-camera photo uploaded to Cloudinary: " + cloudUrl;
+
+      say(
+        "Done! Both photos were captured and saved on this device. " +
+        "The front-camera photo was uploaded to Cloudinary."
+      );
+    } catch (e) {
+      el.firebaseStatus.textContent =
+        "Cloudinary upload failed: " +
+        (e && e.message ? e.message : "Unknown error");
+
+      say(
+        "Both photos were captured and saved on this device, but the front photo could not upload to Cloudinary. " +
+        "Please check your Cloudinary upload preset and try again.",
+        true
+      );
     }
-    step(2, "done", "Dual photos captured"); step(3, "active", "Ready to read"); show("preview");
+
+    step(2, "done", "Dual photos captured");
+    step(3, "active", "Ready to read");
+    show("preview");
   }
+
   el.shoot.addEventListener("click", async function () {
     if (cur.captureMode !== "palm") return;
     if (!el.consent.checked) { say("Please confirm consent before taking photos.", true); return; }
