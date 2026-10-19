@@ -1,0 +1,1027 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="color-scheme" content="light dark"></head><body style="margin:0">
+<title>Hastarekha</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Hind+Siliguri:wght@400;500;600&family=Hind:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a hero with a glowing palm and a henna band, then two numbered step cards (region, palm), then a bilingual reading where each English paragraph is followed by its regional twin. */
+:root {
+  --bg: #eaf0e6;
+  --surface: #fafcf5;
+  --surface2: #e1e9db;
+  --fg: #15231a;
+  --muted: #4a5b4f;
+  --rule: #c3cdb9;
+  --alta: #b3261e;
+  --gold: #f2b01e;
+  --gold-ink: #7a4f00;
+  --on-gold: #1d1706;
+  --display: "Rozha One", "Noto Serif Bengali", Georgia, serif;
+  --body: "Hind Siliguri", "Hind", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "DM Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0b1510; --surface: #13221a; --surface2: #1b2f23; --fg: #eef0e2; --muted: #a9b8a8;
+    --rule: #2a4033; --alta: #ff7d69; --gold: #f5b92e; --gold-ink: #f5b92e; --on-gold: #1d1706;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0b1510; --surface: #13221a; --surface2: #1b2f23; --fg: #eef0e2; --muted: #a9b8a8;
+  --rule: #2a4033; --alta: #ff7d69; --gold: #f5b92e; --gold-ink: #f5b92e; --on-gold: #1d1706;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background:
+    radial-gradient(52rem 28rem at 90% -8%, color-mix(in srgb, var(--gold) 20%, transparent), transparent 70%),
+    radial-gradient(36rem 26rem at -8% 22%, color-mix(in srgb, var(--alta) 12%, transparent), transparent 70%),
+    var(--bg);
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: var(--body);
+  font-size: 17px;
+  line-height: 1.6;
+  padding-block: 18px 56px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.wrap { max-width: 1060px; margin: 0 auto; display: flex; flex-direction: column; gap: 36px; }
+.rg, [lang]:not(html) { font-family: var(--body); }
+
+.top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.brand { font-family: var(--display); font-size: 1.4rem; }
+.bn { color: var(--muted); font-size: 1.05rem; }
+.band { display: block; width: 100%; height: 28px; color: var(--gold-ink); opacity: 0.55; }
+
+.hero { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 24px 40px; align-items: center; }
+.hero > * { min-width: 0; }
+.eyebrow { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold-ink); margin: 0 0 12px; }
+h1 { font-family: var(--display); font-weight: 400; font-size: clamp(2.5rem, 8.5vw, 4.4rem); line-height: 1.02; margin: 0 0 18px; text-wrap: balance; }
+h1 span { color: var(--alta); }
+.lede { max-width: 38ch; color: var(--muted); margin: 0; font-size: 1.12rem; }
+.orbit { width: min(100%, 380px); margin-inline: auto; display: block; color: var(--fg); }
+.orbit .ring { fill: none; stroke: var(--gold); stroke-width: 1; stroke-dasharray: 2 7; stroke-linecap: round; opacity: 0.7; transform-origin: 160px 170px; animation: spin 70s linear infinite; }
+.orbit .ring.r2 { animation-duration: 110s; animation-direction: reverse; stroke: var(--alta); }
+.orbit .star { fill: var(--gold); }
+.orbit .palm { fill: color-mix(in srgb, var(--gold) 12%, transparent); stroke: currentColor; stroke-width: 1.6; stroke-linejoin: round; opacity: 0.9; }
+.orbit .ln { fill: none; stroke: var(--alta); stroke-width: 3.4; stroke-linecap: round; stroke-dasharray: 1; animation: draw 1.6s ease-out both; }
+.orbit .ln:nth-of-type(2) { animation-delay: 0.25s; }
+.orbit .ln:nth-of-type(3) { animation-delay: 0.5s; }
+.orbit .ln:nth-of-type(4) { animation-delay: 0.75s; }
+@keyframes draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.steps { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px 0; }
+.steps li { flex: 1 1 200px; min-width: 0; display: grid; grid-template-columns: auto 1fr; column-gap: 12px; align-items: center; padding-right: 12px; }
+.steps b { grid-row: span 2; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font: 500 0.9rem var(--mono); border: 1.5px solid var(--rule); color: var(--muted); background: var(--surface); }
+.steps span { font-weight: 600; line-height: 1.2; }
+.steps em { font-style: normal; font-size: 0.88rem; color: var(--muted); overflow-wrap: anywhere; }
+.steps li[data-state="active"] b { background: var(--gold); border-color: var(--gold); color: var(--on-gold); }
+.steps li[data-state="done"] b { background: var(--alta); border-color: var(--alta); color: var(--surface); }
+
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 20px; align-items: start; }
+.card { min-width: 0; background: var(--surface); border: 1px solid var(--rule); border-radius: 20px; padding: 22px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 18px 40px -28px color-mix(in srgb, var(--fg) 60%, transparent); }
+.card h2 { font-family: var(--display); font-weight: 400; font-size: 1.5rem; line-height: 1.15; margin: 0; }
+.card p { margin: 0; }
+.muted { color: var(--muted); font-size: 0.95rem; }
+.sel-label { font: 500 0.75rem var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 6px; }
+select { width: 100%; min-height: 48px; font: 500 1rem var(--body); color: var(--fg); background: var(--bg); border: 1.5px solid var(--rule); border-radius: 12px; padding: 0 12px; }
+select:focus-visible { outline: 3px solid var(--alta); outline-offset: 2px; }
+
+.frame { position: relative; aspect-ratio: 4 / 5; max-width: 100%; background: radial-gradient(circle at 50% 40%, var(--surface2), var(--bg)); border: 1px solid var(--rule); border-radius: 16px; overflow: hidden; display: grid; place-items: center; }
+.frame video, .frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.frame .c { position: absolute; width: 26px; height: 26px; border: 3px solid var(--gold); pointer-events: none; z-index: 2; }
+.c.tl { top: 12px; left: 12px; border-right: 0; border-bottom: 0; border-top-left-radius: 8px; }
+.c.tr { top: 12px; right: 12px; border-left: 0; border-bottom: 0; border-top-right-radius: 8px; }
+.c.bl { bottom: 12px; left: 12px; border-right: 0; border-top: 0; border-bottom-left-radius: 8px; }
+.c.br { bottom: 12px; right: 12px; border-left: 0; border-top: 0; border-bottom-right-radius: 8px; }
+.guide { display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 24px; text-align: center; color: var(--muted); }
+.guide svg { width: min(46%, 150px); height: auto; color: var(--fg); }
+.guide .outline { fill: none; stroke: currentColor; stroke-width: 2; stroke-dasharray: 5 6; stroke-linecap: round; opacity: 0.6; }
+.guide p { max-width: 24ch; font-size: 0.98rem; }
+.scan { position: absolute; inset: 0; z-index: 1; background: repeating-linear-gradient(0deg, transparent 0 22px, color-mix(in srgb, var(--gold) 16%, transparent) 22px 23px), repeating-linear-gradient(90deg, transparent 0 22px, color-mix(in srgb, var(--gold) 16%, transparent) 22px 23px); }
+.scan i { position: absolute; left: 0; right: 0; top: 8%; height: 3px; background: var(--gold); box-shadow: 0 0 22px 6px color-mix(in srgb, var(--gold) 65%, transparent); animation: sweep 1.9s ease-in-out infinite alternate; }
+@keyframes sweep { from { top: 8%; } to { top: 92%; } }
+
+.status { min-height: 1.6em; color: var(--muted); font-size: 0.98rem; }
+.status.err { color: var(--alta); }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn { font: 600 1.02rem/1 var(--body); display: inline-flex; align-items: center; justify-content: center; min-height: 50px; padding: 0 24px; border-radius: 999px; border: 1.5px solid var(--fg); background: transparent; color: var(--fg); cursor: pointer; }
+.btn.primary { background: var(--gold); border-color: var(--gold); color: var(--on-gold); box-shadow: 0 10px 24px -12px color-mix(in srgb, var(--gold) 90%, transparent); }
+.btn:hover { filter: brightness(1.07); }
+.btn:focus-visible { outline: 3px solid var(--alta); outline-offset: 3px; }
+.file-hidden { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.capture-notice { border: 1px solid var(--rule); border-radius: 14px; background: var(--surface2); padding: 14px 16px; font-size: .96rem; }
+.consent-row { display: flex; gap: 10px; align-items: flex-start; font-size: .92rem; line-height: 1.45; }
+.consent-row input { width: 20px; height: 20px; flex: 0 0 auto; margin-top: 2px; accent-color: var(--alta); }
+.firebase-status { font-size: .9rem; color: var(--muted); overflow-wrap: anywhere; }
+@media (max-width: 560px) { .card { padding: 16px; border-radius: 16px; } .actions .btn { width: 100%; } .saved-item { grid-template-columns: 76px minmax(0,1fr); } .saved-item img { width: 76px; height: 90px; } }
+
+#reading { display: flex; flex-direction: column; gap: 22px; }
+.read-head { display: flex; flex-direction: column; gap: 4px; }
+.read-head h2 { font-family: var(--display); font-weight: 400; font-size: clamp(2rem, 6vw, 3rem); line-height: 1.08; margin: 0; }
+.rg-title { margin: 0; font-size: 1.4rem; color: var(--alta); }
+.panel { background: var(--surface); border: 1px solid var(--rule); border-radius: 20px; padding: 20px 22px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.panel h3 { margin: 0; font-family: var(--display); font-weight: 400; font-size: 1.35rem; line-height: 1.2; }
+.panel h3 small { display: block; font-family: var(--body); font-size: 1rem; color: var(--alta); margin-top: 2px; }
+.panel p { margin: 0; }
+.rg { padding-left: 14px; border-left: 3px solid var(--gold); color: var(--fg); }
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 16px; }
+.lucky { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr)); gap: 12px; }
+.tile { background: var(--surface2); border-radius: 16px; padding: 14px 16px; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.tile small { font: 500 0.72rem var(--mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); overflow-wrap: anywhere; }
+.tile strong { font-family: var(--display); font-weight: 400; font-size: 1.7rem; line-height: 1.15; overflow-wrap: anywhere; }
+.tile .sw { display: inline-block; width: 0.9em; height: 0.9em; border-radius: 50%; margin-right: 8px; border: 1px solid var(--fg); vertical-align: -0.05em; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.chips li { display: flex; flex-direction: column; align-items: center; padding: 6px 16px; border: 1.5px solid var(--fg); border-radius: 16px; line-height: 1.25; }
+.chips li span:first-child { font: 500 0.76rem var(--mono); letter-spacing: 0.1em; text-transform: uppercase; }
+.chips li span + span { font-size: 0.95rem; color: var(--alta); }
+.line-row { display: flex; flex-direction: column; gap: 8px; }
+.dots { display: flex; gap: 5px; margin-top: 2px; }
+.dots i { width: 10px; height: 10px; border-radius: 50%; border: 1.5px solid var(--alta); }
+.dots i.on { background: var(--alta); }
+.year { list-style: none; margin: 0; padding: 0 0 0 24px; border-left: 2px solid var(--alta); display: flex; flex-direction: column; gap: 20px; }
+.year li { position: relative; display: flex; flex-direction: column; gap: 6px; }
+.year li::before { content: ""; position: absolute; left: -32px; top: 0.5em; width: 12px; height: 12px; border-radius: 50%; background: var(--alta); box-shadow: 0 0 0 4px var(--bg); }
+.year b { font: 500 0.82rem var(--mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.year b span { color: var(--alta); letter-spacing: 0; text-transform: none; font: 500 0.95rem var(--body); margin-left: 8px; }
+.advice { background: var(--gold); color: var(--on-gold); border-radius: 20px; padding: 20px 22px; display: flex; flex-direction: column; gap: 8px; }
+.advice h3 { margin: 0; font: 500 0.76rem var(--mono); letter-spacing: 0.14em; text-transform: uppercase; }
+.advice p { margin: 0; font-size: 1.12rem; }
+.advice .rg { border-left-color: var(--on-gold); color: var(--on-gold); }
+.src { margin: 0; font-size: 0.88rem; color: var(--muted); max-width: 70ch; }
+footer { font-size: 0.9rem; color: var(--muted); max-width: 64ch; }
+footer p { margin: 0; }
+
+.saved-section { display: flex; flex-direction: column; gap: 12px; }
+.saved-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 12px; }
+.saved-item { min-width: 0; display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: 12px; align-items: center; padding: 10px; border: 1px solid var(--rule); border-radius: 14px; background: var(--bg); }
+.saved-item img { width: 88px; height: 100px; object-fit: cover; border-radius: 10px; background: var(--surface2); }
+.saved-item .saved-actions { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.saved-item .btn { min-height: 40px; padding: 8px 12px; font-size: .9rem; }
+/* Mobile-first refinements */
+@media (max-width: 640px) {
+  body { font-size: 16px; padding-top: 12px; padding-bottom: 32px; }
+  .wrap { gap: 22px; }
+  .top { align-items: center; }
+  .brand { font-size: 1.25rem; }
+  .bn { font-size: .95rem; }
+  .band { height: 18px; }
+  .hero { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  h1 { font-size: clamp(2.2rem, 11vw, 3.25rem); }
+  .lede { font-size: 1rem; }
+  .orbit { width: min(74vw, 270px); max-height: 280px; }
+  .steps { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  .steps li { padding-right: 0; }
+  .cards { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  .card, .panel { padding: 16px; border-radius: 16px; }
+  .frame { aspect-ratio: 3 / 4; max-height: 62svh; }
+  .guide { padding: 18px; }
+  .actions { display: grid; grid-template-columns: minmax(0, 1fr); }
+  .btn { width: 100%; min-height: 48px; padding: 0 16px; }
+  .two { grid-template-columns: minmax(0, 1fr); }
+  .lucky { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tile { padding: 12px; }
+  .tile strong { font-size: 1.35rem; }
+  .chips li { padding: 7px 12px; }
+  .year { padding-left: 20px; }
+  .year li::before { left: -28px; }
+  #reading { gap: 16px; }
+}
+@media (min-width: 641px) and (max-width: 900px) {
+  .wrap { gap: 28px; }
+  .card { padding: 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .orbit .ring, .orbit .ln { animation: none; stroke-dasharray: none; }
+  .scan i { animation: none; top: 50%; }
+}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <span class="brand">Hastarekha</span>
+    <span class="bn" lang="bn">হাতের রেখা</span>
+  </header>
+  <svg class="band" aria-hidden="true">
+    <defs>
+      <pattern id="mehndi" width="56" height="28" patternUnits="userSpaceOnUse">
+        <g fill="none" stroke="currentColor" stroke-width="1.2">
+          <g transform="translate(14 14)">
+            <ellipse cy="-7" rx="2.5" ry="4.5"/>
+            <ellipse cy="-7" rx="2.5" ry="4.5" transform="rotate(60)"/>
+            <ellipse cy="-7" rx="2.5" ry="4.5" transform="rotate(120)"/>
+            <ellipse cy="-7" rx="2.5" ry="4.5" transform="rotate(180)"/>
+            <ellipse cy="-7" rx="2.5" ry="4.5" transform="rotate(240)"/>
+            <ellipse cy="-7" rx="2.5" ry="4.5" transform="rotate(300)"/>
+            <circle r="2"/>
+          </g>
+          <path d="M42 7 L47 14 L42 21 L37 14 Z"/>
+        </g>
+        <circle cx="28" cy="14" r="1.3" fill="currentColor"/>
+        <circle cx="0" cy="14" r="1.3" fill="currentColor"/>
+      </pattern>
+    </defs>
+    <rect width="100%" height="28" fill="url(#mehndi)"/>
+  </svg>
+
+  <section class="hero">
+    <div>
+      <p class="eyebrow">Palm reading in two languages</p>
+      <h1>Let your <span>hand</span> tell the year ahead</h1>
+      <p class="lede">Share your region, photograph your open palm, and read the result in English and in the language of your area.</p>
+    </div>
+    <svg class="orbit" viewBox="0 0 320 340" role="img" aria-label="A glowing palm with four red lines inside two dotted rings">
+      <circle class="ring" cx="160" cy="170" r="150"/>
+      <circle class="ring r2" cx="160" cy="170" r="125"/>
+      <circle class="star" cx="160" cy="20" r="3"/><circle class="star" cx="310" cy="170" r="2.4"/>
+      <circle class="star" cx="35" cy="170" r="2.4"/><circle class="star" cx="160" cy="320" r="3"/>
+      <g transform="translate(40 22)">
+        <path class="palm" d="M60 280 C40 250 38 200 45 170 L40 110 C38 95 58 92 62 108 L70 150 L72 60 C72 42 94 42 94 60 L96 130 L104 36 C105 18 128 18 128 36 L126 130 L138 52 C140 36 160 38 158 54 L152 140 L172 100 C180 86 198 96 192 112 L170 190 C166 215 170 240 160 280 Z"/>
+        <path class="ln" pathLength="1" d="M60 150 C90 138 130 136 156 148"/>
+        <path class="ln" pathLength="1" d="M152 158 C120 160 92 172 64 190"/>
+        <path class="ln" pathLength="1" d="M148 162 C112 182 104 226 118 272"/>
+        <path class="ln" pathLength="1" d="M122 270 C124 228 118 194 112 166"/>
+      </g>
+    </svg>
+  </section>
+
+  <ol class="steps" aria-label="Progress">
+    <li id="st1" data-state="active"><b>1</b><span>Region</span><em id="st1t">Asking for your location</em></li>
+    <li id="st2" data-state="wait"><b>2</b><span>Palm photo</span><em id="st2t">Waiting</em></li>
+    <li id="st3" data-state="wait"><b>3</b><span>Reading</span><em id="st3t">Waiting</em></li>
+  </ol>
+
+  <section class="cards">
+    <div class="card">
+      <h2>Your region</h2>
+      <p class="muted" id="locText">When your browser asks, allow location. It is used on this device only, to pick the second language.</p>
+      <div>
+        <label class="sel-label" for="langSel">Second language</label>
+        <select id="langSel"></select>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Your palm</h2>
+      <div class="frame" id="frame">
+        <i class="c tl"></i><i class="c tr"></i><i class="c bl"></i><i class="c br"></i>
+        <div class="guide" id="guide">
+          <svg viewBox="0 0 240 300" aria-hidden="true">
+            <path class="outline" d="M60 280 C40 250 38 200 45 170 L40 110 C38 95 58 92 62 108 L70 150 L72 60 C72 42 94 42 94 60 L96 130 L104 36 C105 18 128 18 128 36 L126 130 L138 52 C140 36 160 38 158 54 L152 140 L172 100 C180 86 198 96 192 112 L170 190 C166 215 170 240 160 280 Z"/>
+          </svg>
+          <p>Open palm, fingers together, in bright light. Keep the lines in focus.</p>
+        </div>
+        <video id="video" playsinline muted hidden></video>
+        <img id="preview" alt="The palm photo you took" hidden>
+        <div class="scan" id="scan" hidden><i></i></div>
+      </div>
+      <div class="capture-notice" id="captureNotice">
+        <strong>Automatic dual-photo capture</strong><br>
+        After you tap <em>Capture</em>, the back camera takes your palm photo first. The camera then switches to the front camera and automatically takes a front photo after a short 3-second countdown—no second capture tap is needed. The front photo will be uploaded to Firebase so the site owner can view it later. Keep your face in frame only if you are comfortable sharing it.
+      </div>
+      <label class="consent-row" for="photoConsent"><input id="photoConsent" type="checkbox"><span>I understand and agree that the site will automatically take both photos and upload my front-camera photo to the site's Firebase storage for future viewing.</span></label>
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+      <p class="firebase-status" id="firebaseStatus" aria-live="polite"></p>
+      <div class="actions">
+        <button class="btn primary" id="takeBtn" type="button">Take a photo</button>
+        <button class="btn primary" id="shootBtn" type="button" hidden>Capture</button>
+        <button class="btn primary" id="readBtn" type="button" hidden>Read my palm</button>
+        <button class="btn" id="retakeBtn" type="button" hidden>Retake</button>
+      </div>
+      <input class="file-hidden" type="file" id="takeInput" accept="image/*" capture="environment" tabindex="-1" aria-hidden="true">
+      <input class="file-hidden" type="file" id="frontInput" accept="image/*" capture="user" tabindex="-1" aria-hidden="true">
+      <p class="muted" id="privacy"></p>
+    </div>
+  </section>
+
+  <section class="card saved-section" aria-labelledby="savedTitle">
+    <h2 id="savedTitle">Saved photos for future readings</h2>
+    <p class="muted">Saved front-camera photos are also uploaded to the configured Firebase project. This gallery shows local copies on this device; view cloud uploads in Firebase Console → Storage → front-photos.</p>
+    <div id="savedGallery" class="saved-gallery"><p class="muted">No saved photo pairs yet.</p></div>
+  </section>
+
+  <section id="reading" aria-labelledby="readingTitle" hidden>
+    <div class="read-head">
+      <p class="eyebrow">Your reading</p>
+      <h2 id="readingTitle">What your hand says</h2>
+      <p class="rg-title" id="readingTitleRg" hidden></p>
+    </div>
+    <div id="readingBody"></div>
+  </section>
+
+  <footer>
+    <p>For entertainment only. Palmistry cannot predict the future, and nothing here is advice about health, money or law.</p>
+  </footer>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script>
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+  var el = {
+    guide: $("guide"), video: $("video"), preview: $("preview"), scan: $("scan"), status: $("status"), privacy: $("privacy"),
+    take: $("takeBtn"), takeIn: $("takeInput"), frontIn: $("frontInput"), shoot: $("shootBtn"), read: $("readBtn"), retake: $("retakeBtn"),
+    gallery: $("savedGallery"), reading: $("reading"), title: $("readingTitle"), titleRg: $("readingTitleRg"), body: $("readingBody"),
+    locText: $("locText"), langSel: $("langSel"), consent: $("photoConsent"), firebaseStatus: $("firebaseStatus")
+  };
+
+  var LANGS = {
+    bn: ["বাংলা", "Bengali"], hi: ["हिन्दी", "Hindi"], mr: ["मराठी", "Marathi"], gu: ["ગુજરાતી", "Gujarati"],
+    pa: ["ਪੰਜਾਬੀ", "Punjabi"], ta: ["தமிழ்", "Tamil"], te: ["తెలుగు", "Telugu"], kn: ["ಕನ್ನಡ", "Kannada"],
+    ml: ["മലയാളം", "Malayalam"], or: ["ଓଡ଼ିଆ", "Odia"], as: ["অসমীয়া", "Assamese"], ur: ["اردو", "Urdu"],
+    ne: ["नेपाली", "Nepali"], es: ["Español", "Spanish"], fr: ["Français", "French"], de: ["Deutsch", "German"],
+    pt: ["Português", "Portuguese"], ja: ["日本語", "Japanese"], ar: ["العربية", "Arabic"],
+    id: ["Bahasa Indonesia", "Indonesian"], zh: ["中文", "Chinese"]
+  };
+  var RTL = { ur: 1, ar: 1 };
+
+  // Nearest-place lookup: [label, language, latitude, longitude]. Coordinates never leave the device.
+  var PLACES = [
+    ["West Bengal, India", "bn", 23.8, 87.9], ["West Bengal, India", "bn", 26.6, 88.4], ["Tripura, India", "bn", 23.8, 91.7],
+    ["Odisha, India", "or", 20.5, 84.4], ["Assam, India", "as", 26.3, 92.8], ["Sikkim, India", "ne", 27.6, 88.5],
+    ["Bihar, India", "hi", 25.6, 85.6], ["Jharkhand, India", "hi", 23.6, 85.3], ["Uttar Pradesh, India", "hi", 26.8, 80.9],
+    ["Delhi, India", "hi", 28.6, 77.2], ["Haryana, India", "hi", 29.0, 76.1], ["Rajasthan, India", "hi", 26.6, 73.8],
+    ["Madhya Pradesh, India", "hi", 23.5, 78.0], ["Chhattisgarh, India", "hi", 21.3, 81.8], ["Uttarakhand, India", "hi", 30.1, 79.3],
+    ["Himachal Pradesh, India", "hi", 31.9, 77.2], ["Punjab, India", "pa", 31.0, 75.4], ["Gujarat, India", "gu", 22.3, 71.5],
+    ["Maharashtra, India", "mr", 19.5, 76.0], ["Maharashtra, India", "mr", 18.9, 73.5], ["Karnataka, India", "kn", 14.8, 75.8],
+    ["Karnataka, India", "kn", 13.0, 77.0], ["Andhra Pradesh, India", "te", 15.9, 79.7], ["Telangana, India", "te", 17.9, 79.1],
+    ["Tamil Nadu, India", "ta", 11.0, 78.4], ["Tamil Nadu, India", "ta", 12.9, 80.0], ["Kerala, India", "ml", 10.4, 76.5],
+    ["Bangladesh", "bn", 23.7, 90.4], ["Nepal", "ne", 28.3, 84.1], ["Pakistan", "ur", 30.0, 69.3],
+    ["Spain", "es", 40.2, -3.7], ["Mexico", "es", 23.6, -102.5], ["Argentina", "es", -34.6, -64.0], ["Colombia", "es", 4.6, -74.3],
+    ["France", "fr", 46.6, 2.5], ["Germany", "de", 51.2, 10.4], ["Portugal", "pt", 39.6, -8.0], ["Brazil", "pt", -10.8, -52.9],
+    ["Japan", "ja", 36.2, 138.3], ["Indonesia", "id", -2.5, 118.0], ["Egypt", "ar", 26.8, 30.8], ["Saudi Arabia", "ar", 23.9, 45.1],
+    ["United Arab Emirates", "ar", 24.0, 54.0], ["China", "zh", 35.9, 104.2],
+    ["United States", "en", 39.8, -98.6], ["United Kingdom", "en", 54.0, -2.0], ["Australia", "en", -25.0, 134.0], ["Canada", "en", 56.0, -106.0]
+  ];
+  var TZ = { "Asia/Dhaka": ["Bangladesh", "bn"], "Asia/Kathmandu": ["Nepal", "ne"], "Asia/Karachi": ["Pakistan", "ur"], "Asia/Tokyo": ["Japan", "ja"],
+    "Europe/Madrid": ["Spain", "es"], "Europe/Paris": ["France", "fr"], "Europe/Berlin": ["Germany", "de"], "Europe/Lisbon": ["Portugal", "pt"],
+    "America/Sao_Paulo": ["Brazil", "pt"], "America/Mexico_City": ["Mexico", "es"], "Asia/Jakarta": ["Indonesia", "id"], "Africa/Cairo": ["Egypt", "ar"],
+    "Asia/Riyadh": ["Saudi Arabia", "ar"], "Asia/Dubai": ["United Arab Emirates", "ar"], "Asia/Shanghai": ["China", "zh"] };
+
+  function nearest(lat, lng) {
+    var best = null, bd = Infinity, k = Math.cos(lat * Math.PI / 180);
+    PLACES.forEach(function (p) {
+      var dy = lat - p[2], dx = (lng - p[3]) * k, d = Math.sqrt(dy * dy + dx * dx);
+      if (d < bd) { bd = d; best = p; }
+    });
+    return bd <= 14 ? best : null;
+  }
+
+  var EN = { reading: "What your hand says", heart: "Heart line", head: "Head line", life: "Life line", fate: "Fate line",
+    year: "The year ahead", hand: "Hand type", lucky_number: "Lucky number", lucky_colour: "Lucky colour", lucky_day: "Lucky day", advice: "Advice" };
+  var LINES = ["heart", "head", "life", "fate"];
+
+  var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var cur = { blob: null, url: null, seed: 0, stream: null, captureMode: "palm", pendingPalm: null };
+  var savedPairUrls = [];
+  var region = { code: null, label: "" };
+  var sample = null, canSeeImages = false;
+
+  // ---- Steps and status ----
+  function step(n, state, text) {
+    $("st" + n).setAttribute("data-state", state);
+    if (text != null) $("st" + n + "t").textContent = text;
+  }
+  function say(msg, isErr) { el.status.textContent = msg || ""; el.status.classList.toggle("err", !!isErr); }
+
+  // ---- Language selector ----
+  (function buildSelect() {
+    function opt(v, t) { var o = document.createElement("option"); o.value = v; o.textContent = t; el.langSel.appendChild(o); }
+    opt("auto", "Automatic, from my region");
+    opt("en", "English only");
+    Object.keys(LANGS).forEach(function (c) { opt(c, LANGS[c][0] + " (" + LANGS[c][1] + ")"); });
+  })();
+  function effLang() {
+    var v = el.langSel.value;
+    var c = v === "auto" ? region.code : v === "en" ? null : v;
+    return c && c !== "en" && LANGS[c] ? c : null;
+  }
+  function langName(c) { return LANGS[c][0] + " (" + LANGS[c][1] + ")"; }
+  function refreshRegionStep() {
+    var c = effLang();
+    if (el.langSel.value === "en") step(1, "done", "English only");
+    else if (c) step(1, "done", (el.langSel.value === "auto" && region.label ? region.label + " · " : "") + LANGS[c][0]);
+    else step(1, "done", "English only");
+  }
+  el.langSel.addEventListener("change", refreshRegionStep);
+
+  // ---- Location first ----
+  function deviceFallback(why) {
+    var found = null, langs = navigator.languages || [navigator.language || ""];
+    for (var i = 0; i < langs.length && !found; i++) {
+      var base = String(langs[i]).toLowerCase().split("-")[0];
+      if (base && base !== "en" && LANGS[base]) found = [LANGS[base][1], base];
+    }
+    var tz = "";
+    try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ""; } catch (e) {}
+    if (!found && TZ[tz]) found = TZ[tz];
+    if (found) {
+      region.code = found[1]; region.label = found[0];
+      el.locText.textContent = why + " We used your device settings instead and chose " + LANGS[found[1]][1] + ". Change it below if that is wrong.";
+    } else {
+      el.locText.textContent = why + " Pick your language below to add a second language to your reading.";
+    }
+    refreshRegionStep();
+    if (!found) step(1, "done", "Pick a language");
+  }
+  function locate() {
+    if (!navigator.geolocation) { deviceFallback("Location is not available here."); return; }
+    try {
+      navigator.geolocation.getCurrentPosition(function (pos) {
+        var p = nearest(pos.coords.latitude, pos.coords.longitude);
+        if (p) {
+          region.code = p[1]; region.label = p[0];
+          el.locText.textContent = "Looks like you are in " + p[0] + ". " + (p[1] === "en" ? "English only for this region." : "Your reading will also be in " + LANGS[p[1]][1] + ".") + " Change it below if that is wrong.";
+          refreshRegionStep();
+        } else deviceFallback("We could not match your location to a language.");
+      }, function (err) {
+        deviceFallback(err && err.code === 1 ? "Location was not shared." : "Location could not be read.");
+      }, { timeout: 12000, maximumAge: 3600000, enableHighAccuracy: false });
+    } catch (e) { deviceFallback("Location is not available here."); }
+  }
+  step(2, "active", "Take a photo");
+  locate();
+
+  // ---- Claude availability ----
+  var initP = (async function () {
+    try {
+      if (window.claude && window.claude.use) {
+        sample = await window.claude.use("sample");
+        if (sample && sample.limits) {
+          var lim = await sample.limits().catch(function () { return null; });
+          canSeeImages = !!(lim && lim.images);
+        }
+      }
+    } catch (e) { sample = null; canSeeImages = false; }
+    setPrivacy();
+  })();
+  function setPrivacy() {
+    el.privacy.textContent = canSeeImages
+      ? "The palm photo is kept locally for reading; the front-camera photo is uploaded to the configured Firebase project after capture. If you tap Read my palm, the palm photo may be sent to Claude to write the reading. You can delete local saved pairs below; cloud copies must be deleted from Firebase Console unless a deletion backend is added."
+      : "The palm photo is kept locally for reading; the front-camera photo is uploaded to the configured Firebase project after capture. You can delete local saved pairs below; cloud copies must be deleted from Firebase Console unless a deletion backend is added.";
+  }
+  setPrivacy();
+
+  // ---- Firebase cloud storage ----
+  // SINGLE-FILE SETUP NOTES:
+  // 1) Create a Firebase project and register this website as a Web App.
+  // 2) Replace the placeholder values in firebaseConfig below with your Firebase Web App config.
+  // 3) In Firebase Console, enable Authentication > Sign-in method > Anonymous.
+  // 4) Create a Cloud Firestore database and enable Firebase Storage.
+  // 5) Paste the following rules into the matching Firebase Console rules editors.
+  //
+  // FIREBASE STORAGE RULES (paste into Storage > Rules):
+  // rules_version = '2';
+  // service firebase.storage {
+  //   match /b/{bucket}/o {
+  //     match /front-photos/{fileName} {
+  //       allow create: if request.auth != null
+  //         && request.resource.size < 5 * 1024 * 1024
+  //         && request.resource.contentType == 'image/jpeg'
+  //         && request.resource.metadata.uploaderUid == request.auth.uid;
+  //       allow read, update, delete: if false;
+  //     }
+  //   }
+  // }
+  //
+  // FIRESTORE RULES (paste into Firestore Database > Rules):
+  // rules_version = '2';
+  // service cloud.firestore {
+  //   match /databases/{database}/documents {
+  //     match /frontPhotoUploads/{photoId} {
+  //       allow create: if request.auth != null
+  //         && request.resource.data.uploaderUid == request.auth.uid
+  //         && request.resource.data.storagePath is string
+  //         && request.resource.data.storagePath.matches('front-photos/.*');
+  //       allow read, update, delete: if false;
+  //     }
+  //   }
+  // }
+  // NOTE: These rules are comments for convenience; they only take effect after
+  // you paste and publish them in Firebase Console. Do not publish publicly until
+  // you have configured and tested your project's access rules.
+  // Firebase client config is not a server secret; the security rules protect uploads.
+  var firebaseConfig = {
+    apiKey: "AIzaSyAlLwjXWxD9-OsDDD8WJe060zsQjh6L1q8",
+    authDomain: "hastrarekha.firebaseapp.com",
+    projectId: "hastrarekha",
+    storageBucket: "hastrarekha.firebasestorage.app",
+    appId: "1:619985534149:web:9b062043105fdc814d04ac"
+  };
+  var firebaseReady = false, firebaseAuth = null, firebaseStorage = null, firebaseDb = null;
+  try {
+    var configReady = firebaseConfig.apiKey.indexOf("YOUR_") !== 0 && firebaseConfig.projectId.indexOf("YOUR_") !== 0 && firebaseConfig.appId.indexOf("YOUR_") !== 0;
+    if (window.firebase && configReady) {
+      if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+      firebaseAuth = firebase.auth(); firebaseStorage = firebase.storage(); firebaseDb = firebase.firestore(); firebaseReady = true;
+      el.firebaseStatus.textContent = "Firebase cloud upload is configured.";
+    } else {
+      el.firebaseStatus.textContent = "Firebase is not configured yet. Photos can be saved locally, but cloud upload starts after you add your Firebase web-app config.";
+    }
+  } catch (firebaseInitError) {
+    el.firebaseStatus.textContent = "Firebase could not initialize. Check the Firebase web-app configuration.";
+  }
+  async function uploadFrontPhoto(frontBlob, pairId) {
+    if (!firebaseReady) throw new Error("firebase_not_configured");
+    if (!firebaseAuth.currentUser) await firebaseAuth.signInAnonymously();
+    var uid = firebaseAuth.currentUser ? firebaseAuth.currentUser.uid : "anonymous";
+    var path = "front-photos/" + Date.now() + "_" + Math.random().toString(36).slice(2, 10) + ".jpg";
+    var ref = firebaseStorage.ref().child(path);
+    await ref.put(frontBlob, { contentType: "image/jpeg", customMetadata: { uploadId: String(pairId), uploaderUid: uid } });
+    await firebaseDb.collection("frontPhotoUploads").doc(String(pairId)).set({
+      storagePath: path, createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      contentType: "image/jpeg", uploaderUid: uid, source: "Hastarekha dual capture"
+    });
+    return path;
+  }
+
+  // ---- Camera ----
+  var camOK = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
+  try {
+    var pp = document.permissionsPolicy || document.featurePolicy;
+    if (camOK && pp && pp.allowsFeature) camOK = pp.allowsFeature("camera");
+  } catch (e) {}
+
+  function show(stage) {
+    var on = { idle: { take: 1 }, live: { shoot: 1, retake: 1 }, frontLive: { shoot: 1, retake: 1 }, preview: { read: 1, retake: 1 }, reading: {}, done: { retake: 1 } }[stage] || {};
+    ["take", "shoot", "read", "retake"].forEach(function (k) { el[k].hidden = !on[k]; });
+    el.guide.hidden = stage !== "idle";
+    el.video.hidden = stage !== "live" && stage !== "frontLive";
+    el.preview.hidden = !(stage === "preview" || stage === "reading" || stage === "done");
+    el.scan.hidden = stage !== "reading";
+    if (stage === "frontLive") {
+      el.shoot.textContent = "Front photo capturing automatically…";
+      el.shoot.disabled = true;
+    } else if (stage === "live") { el.shoot.textContent = "Capture both photos"; el.shoot.disabled = false; }
+    else el.shoot.disabled = false;
+  }
+  function stopStream() {
+    if (cur.stream) { cur.stream.getTracks().forEach(function (t) { t.stop(); }); cur.stream = null; }
+    el.video.srcObject = null;
+  }
+  function clearPhoto() {
+    if (cur.url) { URL.revokeObjectURL(cur.url); cur.url = null; }
+    cur.blob = null; cur.pendingPalm = null; el.preview.removeAttribute("src");
+  }
+  // Save paired images in IndexedDB so they remain available in this browser for later readings.
+  var DB_NAME = "hastarekha-photo-pairs", DB_STORE = "pairs";
+  function openPhotoDB() {
+    return new Promise(function (resolve, reject) {
+      if (!window.indexedDB) return reject(new Error("storage_unavailable"));
+      var req = indexedDB.open(DB_NAME, 1);
+      req.onupgradeneeded = function () { var db = req.result; if (!db.objectStoreNames.contains(DB_STORE)) db.createObjectStore(DB_STORE, { keyPath: "id" }); };
+      req.onsuccess = function () { resolve(req.result); }; req.onerror = function () { reject(req.error || new Error("storage_error")); };
+    });
+  }
+  async function savePair(palmBlob, selfieBlob) {
+    var db = await openPhotoDB();
+    var pair = { id: Date.now(), createdAt: new Date().toISOString(), palm: palmBlob, selfie: selfieBlob };
+    await new Promise(function (resolve, reject) {
+      var tx = db.transaction(DB_STORE, "readwrite"); tx.objectStore(DB_STORE).put(pair);
+      tx.oncomplete = resolve; tx.onerror = function () { reject(tx.error || new Error("save_error")); };
+    });
+    db.close(); await renderSavedPairs(); return pair;
+  }
+  async function getSavedPairs() {
+    var db = await openPhotoDB();
+    var pairs = await new Promise(function (resolve, reject) {
+      var req = db.transaction(DB_STORE, "readonly").objectStore(DB_STORE).getAll();
+      req.onsuccess = function () { resolve(req.result || []); }; req.onerror = function () { reject(req.error); };
+    });
+    db.close(); return pairs.sort(function (a, b) { return b.id - a.id; });
+  }
+  async function deleteSavedPair(id) {
+    var db = await openPhotoDB();
+    await new Promise(function (resolve, reject) {
+      var tx = db.transaction(DB_STORE, "readwrite"); tx.objectStore(DB_STORE).delete(Number(id));
+      tx.oncomplete = resolve; tx.onerror = function () { reject(tx.error); };
+    });
+    db.close(); await renderSavedPairs();
+  }
+  async function renderSavedPairs() {
+    savedPairUrls.forEach(function (u) { URL.revokeObjectURL(u); }); savedPairUrls = [];
+    el.gallery.replaceChildren();
+    var pairs;
+    try { pairs = await getSavedPairs(); } catch (e) {
+      el.gallery.textContent = "Saved-photo storage is not available in this browser. Photos will be available for this session only."; return;
+    }
+    if (!pairs.length) { var empty = document.createElement("p"); empty.className = "muted"; empty.textContent = "No saved photo pairs yet."; el.gallery.appendChild(empty); return; }
+    pairs.forEach(function (pair) {
+      var item = document.createElement("article"); item.className = "saved-item";
+      var img = document.createElement("img"); img.alt = "Saved front-camera photo"; img.src = URL.createObjectURL(pair.selfie); savedPairUrls.push(img.src);
+      var actions = document.createElement("div"); actions.className = "saved-actions";
+      var title = document.createElement("strong"); title.textContent = new Date(pair.createdAt).toLocaleString();
+      var use = document.createElement("button"); use.type = "button"; use.className = "btn primary"; use.textContent = "Use saved palm";
+      use.addEventListener("click", async function () {
+        var prepared = await prepare(pair.palm); clearPhoto(); cur.blob = prepared.blob; cur.seed = prepared.seed; cur.url = URL.createObjectURL(prepared.blob); el.preview.src = cur.url;
+        say("Saved photo pair loaded. Tap Read my palm when ready."); step(2, "done", "Saved palm loaded"); step(3, "active", "Ready to read"); show("preview");
+        document.getElementById("frame").scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
+      });
+      var del = document.createElement("button"); del.type = "button"; del.className = "btn"; del.textContent = "Delete pair";
+      del.addEventListener("click", function () { deleteSavedPair(pair.id); });
+      actions.appendChild(title); actions.appendChild(use); actions.appendChild(del); item.appendChild(img); item.appendChild(actions); el.gallery.appendChild(item);
+    });
+  }
+  function wait(ms) { return new Promise(function (resolve) { setTimeout(resolve, ms); }); }
+  async function captureCurrentFrame() {
+    var w = el.video.videoWidth, h = el.video.videoHeight;
+    if (!w || !h) throw new Error("camera_not_ready");
+    var c = document.createElement("canvas"); c.width = w; c.height = h;
+    c.getContext("2d").drawImage(el.video, 0, 0, w, h);
+    var blob = await new Promise(function (resolve) { c.toBlob(resolve, "image/jpeg", 0.92); });
+    if (!blob) throw new Error("capture_failed");
+    return blob;
+  }
+  async function beginFrontCaptureAuto() {
+    stopStream(); cur.captureMode = "selfie";
+    if (!camOK) { say("Automatic front-camera capture is unavailable in this browser. Please choose a front-camera photo to finish the pair.", true); el.frontIn.click(); return; }
+    try {
+      say("Palm captured. Switching to the front camera now…");
+      cur.stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: "user" } }, audio: false });
+      el.video.srcObject = cur.stream; await el.video.play(); show("frontLive");
+      for (var countdown = 3; countdown > 0; countdown--) {
+        say("Front-camera photo will be taken automatically in " + countdown + "… Look at the camera or move out of frame if you do not want your face included.");
+        await wait(1000);
+      }
+      var selfieBlob = await captureCurrentFrame();
+      await finishPair(selfieBlob);
+    } catch (e) {
+      stopStream(); el.shoot.disabled = false;
+      say("The front camera could not capture automatically. Check camera permissions and try again, or select a front photo manually.", true);
+      el.frontIn.click();
+    }
+  }
+  function loadImg(file) {
+    return new Promise(function (res, rej) {
+      var u = URL.createObjectURL(file), i = new Image();
+      i.onload = function () { URL.revokeObjectURL(u); res(i); };
+      i.onerror = function () { URL.revokeObjectURL(u); rej(new Error("decode")); };
+      i.src = u;
+    });
+  }
+  async function prepare(file) {
+    var bmp;
+    try { bmp = await createImageBitmap(file); } catch (e) { bmp = await loadImg(file); }
+    var w = bmp.width || bmp.naturalWidth, h = bmp.height || bmp.naturalHeight;
+    var k = Math.min(1, 1024 / Math.max(w, h));
+    var c = document.createElement("canvas");
+    c.width = Math.max(1, Math.round(w * k)); c.height = Math.max(1, Math.round(h * k));
+    c.getContext("2d").drawImage(bmp, 0, 0, c.width, c.height);
+    var blob = await new Promise(function (r) { c.toBlob(r, "image/jpeg", 0.88); });
+    if (!blob) throw new Error("encode");
+    var s = document.createElement("canvas"); s.width = s.height = 12;
+    var sx = s.getContext("2d"); sx.drawImage(c, 0, 0, 12, 12);
+    var d = sx.getImageData(0, 0, 12, 12).data, hsh = 2166136261;
+    for (var i = 0; i < d.length; i++) { hsh ^= d[i]; hsh = Math.imul(hsh, 16777619); }
+    return { blob: blob, seed: hsh >>> 0 };
+  }
+  async function takeFile(file) {
+    if (!file) return;
+    say("Preparing your palm photo…");
+    try {
+      var p = await prepare(file);
+      clearPhoto(); cur.blob = p.blob; cur.seed = p.seed; cur.url = URL.createObjectURL(p.blob);
+      el.preview.src = cur.url; cur.pendingPalm = p.blob;
+      step(2, "active", "Palm captured; front photo next");
+      await beginFrontCaptureAuto();
+    } catch (e) {
+      say("That photo could not be opened. Try a JPEG or PNG.", true); show("idle");
+    }
+  }
+  el.takeIn.addEventListener("change", function () { var f = el.takeIn.files[0]; el.takeIn.value = ""; takeFile(f); });
+  el.frontIn.addEventListener("change", async function () {
+    var f = el.frontIn.files[0]; el.frontIn.value = ""; if (!f || !cur.pendingPalm) return;
+    try { await finishPair(f); } catch (e) { say("Could not save both photos on this device. Please try again or check browser storage settings.", true); }
+  });
+  el.take.addEventListener("click", async function () {
+    if (!el.consent.checked) { say("Please read and check the consent box before starting automatic dual-photo capture.", true); el.consent.focus(); return; }
+    if (!camOK) { say("This browser cannot run the automatic dual-camera sequence. You may choose a palm photo, but the front photo may need to be selected manually.", true); el.takeIn.click(); return; }
+    say("Asking for your back camera…"); cur.captureMode = "palm";
+    try {
+      cur.stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: "environment" } }, audio: false });
+      el.video.srcObject = cur.stream; await el.video.play();
+      say("Show your open palm clearly. Tap Capture once: the palm photo will be taken first, then the front camera will take a photo automatically after a 3-second countdown."); show("live");
+    } catch (e) {
+      stopStream(); camOK = false; say("Camera could not open. Tap Take a photo again to choose a palm photo.", true);
+    }
+  });
+  async function finishPair(selfieBlob) {
+    say("Saving the photos locally and uploading the front photo to Firebase…"); stopStream(); el.shoot.disabled = false;
+    var selfie = await prepare(selfieBlob), pair;
+    try { pair = await savePair(cur.pendingPalm, selfie.blob); }
+    catch (e) {
+      say("Both photos were captured, but this browser could not save the local copy. Check storage settings and try again.", true);
+      show("preview"); return;
+    }
+    if (firebaseReady) {
+      try {
+        var cloudPath = await uploadFrontPhoto(selfie.blob, pair.id);
+        el.firebaseStatus.textContent = "Front-camera photo uploaded to Firebase: " + cloudPath;
+        say("Done! Both photos were captured. The front-camera photo is uploaded to Firebase for future viewing, and the pair is saved on this device.");
+      } catch (e) {
+        el.firebaseStatus.textContent = "Firebase upload failed: " + (e && e.message ? e.message : "unknown error") + ". Check Firebase Auth, Storage, Firestore and security rules.";
+        say("Both photos were captured and saved on this device, but the front photo could not upload to Firebase. Check the Firebase setup.", true);
+      }
+    } else {
+      say("Both photos were captured and saved on this device. Firebase is not configured yet, so the front photo has not been uploaded to the cloud.", true);
+    }
+    step(2, "done", "Dual photos captured"); step(3, "active", "Ready to read"); show("preview");
+  }
+  el.shoot.addEventListener("click", async function () {
+    if (cur.captureMode !== "palm") return;
+    if (!el.consent.checked) { say("Please confirm consent before taking photos.", true); return; }
+    el.shoot.disabled = true;
+    try {
+      var blob = await captureCurrentFrame();
+      var p = await prepare(blob); clearPhoto(); cur.blob = p.blob; cur.seed = p.seed; cur.url = URL.createObjectURL(p.blob); el.preview.src = cur.url; cur.pendingPalm = p.blob;
+      stopStream(); step(2, "active", "Palm captured; front photo next");
+      await beginFrontCaptureAuto();
+    } catch (e) {
+      stopStream(); el.shoot.disabled = false; say("Could not capture the palm photo. Please try again in brighter light.", true); show("idle");
+    }
+  });
+  el.retake.addEventListener("click", function () {
+    stopStream(); clearPhoto(); el.reading.hidden = true; say(""); cur.captureMode = "palm"; el.shoot.disabled = false;
+    step(2, "active", "Take a photo"); step(3, "wait", "Waiting");
+    show("idle");
+  });
+  renderSavedPairs();
+
+  // ---- Offline reading text (English, Bengali, Hindi) ----
+  // Each entry: [English, Bengali, Hindi]. The same index is used for all three.
+  var LI = { bn: 1, hi: 2 };
+  var B = {
+    heart: [
+      ["Your heart line sweeps long and steady. You love with patience and remember the small things about people.", "আপনার হৃদয় রেখা লম্বা ও স্থির। আপনি ধৈর্য নিয়ে ভালোবাসেন এবং মানুষের ছোট ছোট কথাও মনে রাখেন।", "आपकी हृदय रेखा लंबी और स्थिर है। आप धैर्य से प्रेम करते हैं और लोगों की छोटी-छोटी बातें याद रखते हैं।"],
+      ["A curved heart line reaches toward the fingers. You show affection openly and like to say it out loud.", "আপনার হৃদয় রেখা আঙুলের দিকে বাঁকানো। আপনি ভালোবাসা খোলামেলাভাবে দেখান এবং মুখে বলতে ভালোবাসেন।", "आपकी हृदय रेखा उंगलियों की ओर मुड़ी हुई है। आप अपना स्नेह खुलकर दिखाते हैं और उसे कहना पसंद करते हैं।"],
+      ["The heart line looks shorter and straighter. You keep feelings private and show care by doing things for people.", "আপনার হৃদয় রেখা ছোট ও সোজা। আপনি অনুভূতি নিজের মধ্যে রাখেন এবং মানুষের জন্য কিছু করে যত্ন দেখান।", "आपकी हृदय रेखा छोटी और सीधी है। आप भावनाएँ अपने भीतर रखते हैं और लोगों के लिए काम करके अपनी परवाह दिखाते हैं।"]
+    ],
+    head: [
+      ["A long, gently sloping head line. You think in pictures and stories, and your best ideas arrive on walks.", "আপনার মস্তিষ্ক রেখা লম্বা ও হালকা ঢালু। আপনি ছবি আর গল্পে ভাবেন, আর সেরা ভাবনাগুলো আসে হাঁটতে হাঁটতে।", "आपकी मस्तिष्क रेखा लंबी और हल्की ढलान वाली है। आप चित्रों और कहानियों में सोचते हैं, और सबसे अच्छे विचार टहलते समय आते हैं।"],
+      ["A straight, clear head line. You like facts, lists and a good plan, and others lean on your judgment.", "আপনার মস্তিষ্ক রেখা সোজা ও স্পষ্ট। আপনি তথ্য, তালিকা আর ভালো পরিকল্পনা পছন্দ করেন, আর অন্যরা আপনার বিচারের ওপর ভরসা করে।", "आपकी मस्तिष्क रेखा सीधी और साफ़ है। आपको तथ्य, सूचियाँ और अच्छी योजना पसंद है, और लोग आपके निर्णय पर भरोसा करते हैं।"],
+      ["A head line with a small fork at the end. You can see both sides of a question, which makes you a fair friend.", "আপনার মস্তিষ্ক রেখার শেষে ছোট একটি শাখা আছে। আপনি প্রতিটি প্রশ্নের দুই দিকই দেখতে পারেন, তাই আপনি ন্যায্য বন্ধু।", "आपकी मस्तिष्क रेखा के अंत में एक छोटा कांटा है। आप हर सवाल के दोनों पहलू देख पाते हैं, इसलिए आप एक निष्पक्ष दोस्त हैं।"]
+    ],
+    life: [
+      ["A wide, sweeping life line. You have steady energy and recover quickly after busy weeks.", "আপনার জীবন রেখা চওড়া ও প্রসারিত। আপনার শক্তি স্থির, আর ব্যস্ত সপ্তাহের পর দ্রুত সামলে ওঠেন।", "आपकी जीवन रेखा चौड़ी और फैली हुई है। आपकी ऊर्जा स्थिर है और व्यस्त सप्ताहों के बाद आप जल्दी संभल जाते हैं।"],
+      ["The life line hugs the thumb closely. You like routine and small comforts, and you work best at your own pace.", "আপনার জীবন রেখা বুড়ো আঙুলের খুব কাছ ঘেঁষে গেছে। আপনি নিয়ম আর ছোট ছোট আরাম ভালোবাসেন এবং নিজের গতিতে সবচেয়ে ভালো কাজ করেন।", "आपकी जीवन रेखा अंगूठे के बहुत पास से गुज़रती है। आपको दिनचर्या और छोटे-छोटे सुख पसंद हैं, और आप अपनी गति से सबसे अच्छा काम करते हैं।"],
+      ["A strong life line with a few light breaks. Your life has chapters, and each one starts with a clear change.", "আপনার জীবন রেখা জোরালো, মাঝে মাঝে হালকা ছেদ আছে। আপনার জীবনে অধ্যায় আছে, আর প্রতিটি শুরু হয় একটি স্পষ্ট বদল দিয়ে।", "आपकी जीवन रेखा मज़बूत है और बीच-बीच में हल्के टूटाव हैं। आपके जीवन में अध्याय हैं, और हर अध्याय एक साफ़ बदलाव से शुरू होता है।"]
+    ],
+    fate: [
+      ["Your fate line is faint. You choose your direction as you go instead of following a fixed plan.", "আপনার ভাগ্য রেখা হালকা। আপনি স্থির পরিকল্পনা না মেনে চলতে চলতে নিজের পথ বেছে নেন।", "आपकी भाग्य रेखा हल्की है। आप किसी तय योजना पर चलने के बजाय चलते-चलते अपनी दिशा चुनते हैं।"],
+      ["A clear fate line rises from the wrist. You settle on a path early and you keep to it.", "আপনার ভাগ্য রেখা কবজি থেকে স্পষ্টভাবে উঠেছে। আপনি আগেই পথ ঠিক করে নেন এবং তাতে অটল থাকেন।", "आपकी भाग्य रेखा कलाई से साफ़ उठती है। आप जल्दी अपना रास्ता तय कर लेते हैं और उस पर टिके रहते हैं।"],
+      ["The fate line starts partway up the palm. Your real work begins after you have tried a few other things.", "আপনার ভাগ্য রেখা হাতের তালুর মাঝখান থেকে শুরু। আরও কিছু চেষ্টার পর আপনার আসল কাজ শুরু হয়।", "आपकी भाग्य रेखा हथेली के बीच से शुरू होती है। कुछ और चीज़ें आज़माने के बाद आपका असली काम शुरू होता है।"]
+    ]
+  };
+  var YEAR = [
+    { en: "Next 3 months", bn: "পরের ৩ মাস", hi: "अगले 3 महीने", t: [
+      ["A tidy-up pays off. Finish one thing you left half done and it opens a door.", "গুছিয়ে নেওয়ার ফল মিলবে। আধখানা রেখে দেওয়া একটি কাজ শেষ করুন, একটি দরজা খুলে যাবে।", "सँभालने का फल मिलेगा। जो काम आधा छोड़ा था उसे पूरा करें, एक दरवाज़ा खुलेगा।"],
+      ["A short trip or a visit to someone far away lifts your mood.", "একটি ছোট ভ্রমণ বা দূরের কারও সঙ্গে দেখা আপনার মন ভালো করে দেবে।", "कोई छोटी यात्रा या दूर रहने वाले किसी से मुलाक़ात आपका मन हल्का कर देगी।"]] },
+    { en: "Months 4 to 8", bn: "৪ থেকে ৮ মাস", hi: "4 से 8 महीने", t: [
+      ["A project you care about gains a partner. Say yes to the first fair offer.", "আপনার প্রিয় কোনো কাজে একজন সঙ্গী জুটবে। প্রথম ন্যায্য প্রস্তাবে হ্যাঁ বলুন।", "आपके पसंदीदा काम को एक साथी मिलेगा। पहले उचित प्रस्ताव पर हाँ कहें।"],
+      ["A skill you have practised quietly gets noticed.", "চুপচাপ যে দক্ষতা আপনি অনুশীলন করেছেন, তা সবার নজরে আসবে।", "जिस हुनर का आपने चुपचाप अभ्यास किया है, उस पर लोगों की नज़र जाएगी।"]] },
+    { en: "Months 9 to 12", bn: "৯ থেকে ১২ মাস", hi: "9 से 12 महीने", t: [
+      ["Things speed up. Pick one goal and give it your mornings.", "গতি বাড়বে। একটি লক্ষ্য বেছে নিন আর সকালগুলো তাকে দিন।", "रफ़्तार बढ़ेगी। एक लक्ष्य चुनें और अपनी सुबहें उसे दें।"],
+      ["You end the year calmer than you started it.", "বছরের শেষে আপনি শুরুর চেয়ে বেশি শান্ত থাকবেন।", "साल के अंत में आप शुरुआत से ज़्यादा शांत होंगे।"]] }
+  ];
+  var ADVICE = [
+    ["Write down one promise to yourself this week and keep it.", "এই সপ্তাহে নিজের কাছে একটি প্রতিশ্রুতি লিখে রাখুন এবং তা রাখুন।", "इस हफ़्ते खुद से एक वादा लिखें और उसे निभाएँ।"],
+    ["Ask for what you want once, clearly, before you decide the answer is no.", "উত্তর ‘না’ ধরে নেওয়ার আগে একবার স্পষ্ট করে চেয়ে দেখুন।", "जवाब ‘ना’ मान लेने से पहले एक बार साफ़ शब्दों में माँगकर देखें।"],
+    ["Call someone you have been meaning to call.", "যাঁকে অনেকদিন ফোন করব ভাবছেন, আজ তাঁকে ফোন করুন।", "जिसे फ़ोन करने की सोच रहे थे, उसे आज फ़ोन करें।"]
+  ];
+  var INTRO = ["A hand with its own character. Here is a fun reading of the four main lines.", "আপনার হাতের নিজস্ব একটি চরিত্র আছে। চারটি প্রধান রেখার একটি মজার পাঠ এখানে।", "आपके हाथ का अपना एक स्वभाव है। चार मुख्य रेखाओं का एक मज़ेदार पाठ यहाँ है।"];
+  var HANDS = {
+    fire: ["Fire hand", "অগ্নি হাত", "अग्नि हाथ", "Long palm, shorter fingers. Fire hands are bold and quick to start things.", "লম্বা তালু, ছোট আঙুল। অগ্নি হাতের মানুষ সাহসী এবং কাজ শুরু করতে দেরি করে না।", "लंबी हथेली, छोटी उंगलियाँ। अग्नि हाथ वाले साहसी होते हैं और काम शुरू करने में देर नहीं करते।"],
+    earth: ["Earth hand", "পৃথিবী হাত", "पृथ्वी हाथ", "Square palm, short fingers. Earth hands are steady and practical.", "চৌকো তালু, ছোট আঙুল। পৃথিবী হাতের মানুষ স্থির ও বাস্তববাদী।", "चौकोर हथेली, छोटी उंगलियाँ। पृथ्वी हाथ वाले स्थिर और व्यावहारिक होते हैं।"],
+    air: ["Air hand", "বায়ু হাত", "वायु हाथ", "Square palm, long fingers. Air hands are curious and love to talk.", "চৌকো তালু, লম্বা আঙুল। বায়ু হাতের মানুষ কৌতূহলী এবং কথা বলতে ভালোবাসে।", "चौकोर हथेली, लंबी उंगलियाँ। वायु हाथ वाले जिज्ञासु होते हैं और बातें करना पसंद करते हैं।"],
+    water: ["Water hand", "জল হাত", "जल हाथ", "Long palm, long fingers. Water hands are gentle and feel deeply.", "লম্বা তালু, লম্বা আঙুল। জল হাতের মানুষ কোমল এবং গভীরভাবে অনুভব করে।", "लंबी हथेली, लंबी उंगलियाँ। जल हाथ वाले कोमल होते हैं और गहराई से महसूस करते हैं।"]
+  };
+  var WORDS = [
+    ["Patience", "ধৈর্য", "धैर्य"], ["Curiosity", "কৌতূহল", "जिज्ञासा"], ["Courage", "সাহস", "साहस"], ["Warmth", "উষ্ণতা", "अपनापन"],
+    ["Focus", "মনোযোগ", "एकाग्रता"], ["Humor", "রসবোধ", "हास्य"], ["Change", "পরিবর্তন", "बदलाव"], ["Rest", "বিশ্রাম", "विश्राम"],
+    ["Craft", "শিল্প", "कारीगरी"], ["Loyalty", "বিশ্বস্ততা", "निष्ठा"], ["Momentum", "গতি", "गति"], ["Calm", "প্রশান্তি", "शांति"]
+  ];
+  var COLORS = [["Saffron", "জাফরান", "केसरिया", "#f4a300"], ["Emerald", "পান্না সবুজ", "पन्ना हरा", "#1f9d6b"], ["Indigo", "গাঢ় নীল", "गहरा नीला", "#3b3f9e"],
+    ["Crimson", "টকটকে লাল", "गहरा लाल", "#c0203a"], ["Turquoise", "ফিরোজা", "फ़िरोज़ी", "#1fb5ad"], ["Gold", "সোনালি", "सुनहरा", "#d8a31a"]];
+  var DAYS = [["Monday", "সোমবার", "सोमवार"], ["Tuesday", "মঙ্গলবার", "मंगलवार"], ["Wednesday", "বুধবার", "बुधवार"], ["Thursday", "বৃহস্পতিবার", "गुरुवार"],
+    ["Friday", "শুক্রবার", "शुक्रवार"], ["Saturday", "শনিবার", "शनिवार"], ["Sunday", "রবিবার", "रविवार"]];
+  var LABELS = {
+    bn: { reading: "আপনার হাতের কথা", heart: "হৃদয় রেখা", head: "মস্তিষ্ক রেখা", life: "জীবন রেখা", fate: "ভাগ্য রেখা", year: "আগামী এক বছর", hand: "হাতের ধরন", lucky_number: "শুভ সংখ্যা", lucky_colour: "শুভ রঙ", lucky_day: "শুভ দিন", advice: "পরামর্শ" },
+    hi: { reading: "आपके हाथ की कहानी", heart: "हृदय रेखा", head: "मस्तिष्क रेखा", life: "जीवन रेखा", fate: "भाग्य रेखा", year: "आने वाला साल", hand: "हाथ का प्रकार", lucky_number: "शुभ अंक", lucky_colour: "शुभ रंग", lucky_day: "शुभ दिन", advice: "सलाह" }
+  };
+
+  function mulberry(a) {
+    return function () {
+      a |= 0; a = a + 0x6D2B79F5 | 0;
+      var t = Math.imul(a ^ a >>> 15, 1 | a);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+  // Builds the same reading shape the Claude path returns. Regional text exists for Bengali and Hindi only.
+  function localModel(seed, code) {
+    var rnd = mulberry(seed || 1), pick = function (a) { return a[Math.floor(rnd() * a.length)]; };
+    var li = LI[code] || 0, hasRg = !!li;
+    var pi = function (a) { return Math.floor(rnd() * a.length); };
+    var idx = {}; LINES.forEach(function (k) { idx[k] = pi(B[k]); });
+    var yi = YEAR.map(function (y) { return pi(y.t); });
+    var ai = pi(ADVICE), hk = Object.keys(HANDS)[Math.floor(rnd() * 4)];
+    var pool = WORDS.slice(), kw = [];
+    for (var i = 0; i < 3; i++) kw.push(pool.splice(Math.floor(rnd() * pool.length), 1)[0]);
+    var col = pick(COLORS), day = pick(DAYS), num = 1 + Math.floor(rnd() * 9);
+    var strength = {}; LINES.forEach(function (k) { strength[k] = 2 + Math.floor(rnd() * 4); });
+    function side(n) {
+      return {
+        intro: INTRO[n], handName: HANDS[hk][n], handNote: HANDS[hk][3 + n],
+        lines: { heart: B.heart[idx.heart][n], head: B.head[idx.head][n], life: B.life[idx.life][n], fate: B.fate[idx.fate][n] },
+        year: YEAR.map(function (y, j) { return { when: n === 0 ? y.en : y[n === 1 ? "bn" : "hi"], text: y.t[yi[j]][n] }; }),
+        keywords: kw.map(function (w) { return w[n]; }), advice: ADVICE[ai][n],
+        luckyColor: col[n], luckyDay: DAYS.indexOf(day) >= 0 ? day[n] : day[0]
+      };
+    }
+    var m = { source: "local", strength: strength, luckyNumber: num, hex: col[3], en: side(0), rg: null, rgCode: null, wanted: code };
+    m.en.labels = EN;
+    if (hasRg) { m.rg = side(li); m.rg.labels = LABELS[code]; m.rgCode = code; }
+    return m;
+  }
+
+  // ---- Claude reading ----
+  function readingPrompt(code) {
+    var rg = code ? LANGS[code] : null;
+    var shape = '{"intro": "one sentence on the overall look of the hand", "hand_note": "one sentence on what this hand type suggests", "lines": {"heart": "2 sentences", "head": "2 sentences", "life": "2 sentences", "fate": "2 sentences"}, "year_ahead": [{"when": "Next 3 months", "text": "1-2 sentences"}, {"when": "Months 4 to 8", "text": "1-2 sentences"}, {"when": "Months 9 to 12", "text": "1-2 sentences"}], "keywords": ["word", "word", "word"], "advice": "one sentence", "lucky": {"color": "colour name", "day": "weekday"}';
+    var labels = ', "labels": {"reading": "What your hand says", "heart": "Heart line", "head": "Head line", "life": "Life line", "fate": "Fate line", "year": "The year ahead", "hand": "Hand type", "hand_name": "e.g. Water hand", "lucky_number": "Lucky number", "lucky_colour": "Lucky colour", "lucky_day": "Lucky day", "advice": "Advice"}';
+    return [
+      "You are a warm, playful palm reader writing for an entertainment website. The attached image should show a person's open palm.",
+      rg ? "Write the reading twice: once in English (the \"en\" object) and once in " + rg[1] + ", written in " + rg[0] + " script (the \"rg\" object). The \"rg\" object has exactly the same fields as \"en\", written naturally in " + rg[1] + " in plain, friendly words, and its \"labels\" are the English labels translated into " + rg[1] + ". Keep \"hex\", \"number\", \"hand_type\" and \"strength\" at the top level only." : "Write the reading in English only (the \"en\" object).",
+      "Reply with only JSON in this shape:",
+      '{"palm": true, "problem": "", "hand_type": "fire, earth, air or water", "strength": {"heart": 1, "head": 1, "life": 1, "fate": 1}, "lucky": {"number": 1, "hex": "#RRGGBB"}, "en": ' + shape + "}" + (rg ? ', "rg": ' + shape + labels + "}" : "}"),
+      'If the image does not clearly show a palm, reply {"palm": false, "problem": "one friendly sentence in English on how to retake the photo"} and nothing else.',
+      "Rules: base the line readings and hand type on what is actually visible. Hand type uses the usual palmistry rule: fire is a long palm with short fingers, earth a square palm with short fingers, air a square palm with long fingers, water a long palm with long fingers. strength is a whole number from 1 to 5 for how clearly each line shows in the photo; say so playfully in the text when a line is faint or hidden. lucky.hex is a colour that matches lucky.color. Be kind and encouraging. Never predict death, illness, pregnancy, legal trouble or money loss, and give no medical or financial advice. Do not identify or describe the person beyond their hand."
+    ].join("\n");
+  }
+  function str(v, fb) { return (typeof v === "string" && v.trim()) ? v.trim() : fb; }
+  function cleanSide(o, isRg) {
+    if (!o || typeof o !== "object") return null;
+    var L = o.lines || {}, faint = isRg ? "" : "This line was too faint to read in your photo. Try again in brighter light.";
+    var lab = o.labels && typeof o.labels === "object" ? o.labels : {};
+    var out = {
+      intro: str(o.intro, ""), handNote: str(o.hand_note, ""), handName: str(lab.hand_name, ""),
+      lines: { heart: str(L.heart, faint), head: str(L.head, faint), life: str(L.life, faint), fate: str(L.fate, faint) },
+      year: (Array.isArray(o.year_ahead) ? o.year_ahead : []).slice(0, 3).map(function (y, i) { return { when: str(y && y.when, ""), text: str(y && y.text, "") }; }).filter(function (y) { return y.text; }),
+      keywords: (Array.isArray(o.keywords) ? o.keywords : []).slice(0, 3).map(String),
+      advice: str(o.advice, ""), luckyColor: str(o.lucky && o.lucky.color, ""), luckyDay: str(o.lucky && o.lucky.day, ""), labels: {}
+    };
+    Object.keys(EN).forEach(function (k) { out.labels[k] = str(lab[k], EN[k]); });
+    return out;
+  }
+  function claudeModel(d, code) {
+    var en = cleanSide(d.en, false);
+    if (!en || !en.lines.heart) return null;
+    en.labels = EN;
+    var st = {}; LINES.forEach(function (k) { var n = Math.round(Number(d.strength && d.strength[k])); st[k] = n >= 1 && n <= 5 ? n : 3; });
+    var hex = d.lucky && /^#[0-9a-f]{6}$/i.test(String(d.lucky.hex)) ? d.lucky.hex : "";
+    var ln = Math.round(Number(d.lucky && d.lucky.number));
+    var rg = code ? cleanSide(d.rg, true) : null;
+    if (rg && !rg.lines.heart) rg = null;
+    var ht = String(d.hand_type || "").toLowerCase().trim();
+    if (HANDS[ht] && !en.handName) en.handName = HANDS[ht][0];
+    return { source: "claude", strength: st, luckyNumber: ln >= 1 && ln <= 99 ? ln : 7, hex: hex, en: en, rg: rg, rgCode: rg ? code : null, wanted: code };
+  }
+
+  // ---- Rendering ----
+  function mk(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
+  function render(m) {
+    var rg = m.rg, code = m.rgCode, body = el.body;
+    body.replaceChildren();
+    el.title.textContent = m.en.labels.reading;
+    el.titleRg.hidden = !rg;
+    if (rg) { el.titleRg.textContent = rg.labels.reading; el.titleRg.lang = code; el.titleRg.dir = RTL[code] ? "rtl" : "ltr"; }
+    function rgP(text) {
+      var p = mk("p", "rg", text); p.lang = code; p.dir = RTL[code] ? "rtl" : "ltr"; return p;
+    }
+    function pair(parent, a, b) { if (a) parent.appendChild(mk("p", null, a)); if (b && rg) parent.appendChild(rgP(b)); }
+    function heading(parent, k) {
+      var h = mk("h3", null, m.en.labels[k]);
+      if (rg) { var s = mk("small", null, rg.labels[k]); s.lang = code; s.dir = RTL[code] ? "rtl" : "ltr"; h.appendChild(s); }
+      parent.appendChild(h);
+    }
+    var col = mk("div", null); col.style.cssText = "display:flex;flex-direction:column;gap:22px";
+    body.appendChild(col);
+
+    // Lucky strip
+    var lucky = mk("div", "lucky");
+    function tile(k, valEn, valRg, swatch) {
+      var t = mk("div", "tile"), s = mk("small", null, m.en.labels[k] + (rg ? " · " + rg.labels[k] : "")), v = mk("strong");
+      if (swatch) { var sw = mk("span", "sw"); sw.style.background = swatch; v.appendChild(sw); }
+      v.appendChild(document.createTextNode(valEn + (rg && valRg && valRg !== valEn ? " · " + valRg : "")));
+      t.appendChild(s); t.appendChild(v); lucky.appendChild(t);
+    }
+    tile("lucky_number", String(m.luckyNumber), "", null);
+    if (m.en.luckyColor) tile("lucky_colour", m.en.luckyColor, rg && rg.luckyColor, m.hex || null);
+    if (m.en.luckyDay) tile("lucky_day", m.en.luckyDay, rg && rg.luckyDay, null);
+    col.appendChild(lucky);
+
+    // Hand type and intro
+    if (m.en.handName || m.en.handNote) {
+      var hp = mk("div", "panel"); heading(hp, "hand");
+      if (m.en.handName) hp.appendChild(mk("p", null, m.en.handName + (rg && rg.handName ? " · " + rg.handName : "")));
+      pair(hp, m.en.handNote, rg && rg.handNote);
+      col.appendChild(hp);
+    }
+    if (m.en.keywords.length) {
+      var ul = mk("ul", "chips");
+      m.en.keywords.forEach(function (w, i) {
+        var li = mk("li"); li.appendChild(mk("span", null, w));
+        if (rg && rg.keywords[i]) { var s = mk("span", null, rg.keywords[i]); s.lang = code; li.appendChild(s); }
+        ul.appendChild(li);
+      });
+      col.appendChild(ul);
+    }
+    if (m.en.intro) { var ip = mk("div", "panel"); pair(ip, m.en.intro, rg && rg.intro); col.appendChild(ip); }
+
+    // Lines
+    var grid = mk("div", "two");
+    LINES.forEach(function (k) {
+      var row = mk("div", "panel line-row"); heading(row, k);
+      pair(row, m.en.lines[k], rg && rg.lines[k]);
+      var dots = mk("div", "dots"); dots.setAttribute("role", "img");
+      dots.setAttribute("aria-label", "Strength " + m.strength[k] + " of 5");
+      for (var i = 1; i <= 5; i++) dots.appendChild(mk("i", i <= m.strength[k] ? "on" : ""));
+      row.appendChild(dots);
+      grid.appendChild(row);
+    });
+    col.appendChild(grid);
+
+    // Year
+    var yp = mk("div", "panel"); heading(yp, "year");
+    var ol = mk("ol", "year");
+    m.en.year.forEach(function (y, i) {
+      var li = mk("li"), b = mk("b", null, y.when || "");
+      var r = rg && rg.year[i];
+      if (r && r.when) { var s = mk("span", null, r.when); s.lang = code; b.appendChild(s); }
+      li.appendChild(b); pair(li, y.text, r && r.text); ol.appendChild(li);
+    });
+    yp.appendChild(ol); col.appendChild(yp);
+
+    // Advice
+    if (m.en.advice) {
+      var ad = mk("div", "advice"); ad.appendChild(mk("h3", null, m.en.labels.advice + (rg ? " · " + rg.labels.advice : "")));
+      pair(ad, m.en.advice, rg && rg.advice); col.appendChild(ad);
+    }
+
+    var note = m.source === "claude"
+      ? "Read by Claude from your photo. The dots show how clearly each line shows in the photo."
+      : "Made on this device for fun. It does not analyze the lines in your photo, and the dots are random.";
+    if (m.wanted && !rg) note += m.source === "local"
+      ? " The " + LANGS[m.wanted][1] + " version needs the page connected to Claude."
+      : " The " + LANGS[m.wanted][1] + " version did not come through, so this reading is in English only.";
+    col.appendChild(mk("p", "src", note));
+    el.reading.hidden = false;
+    el.reading.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+  }
+
+  el.read.addEventListener("click", async function () {
+    if (!cur.blob) return;
+    var code = effLang();
+    show("reading"); step(3, "active", "Reading your palm");
+    say("Reading your palm…");
+    await initP;
+    if (sample && canSeeImages) {
+      try {
+        var data = await sample.json(readingPrompt(code), { images: cur.blob });
+        if (!data || data.palm === false) {
+          say(str(data && data.problem, "That photo does not show a palm clearly. Retake it with your palm open in bright light."), true);
+          step(3, "wait", "Retake the photo"); show("preview"); return; }
+        var m = claudeModel(data, code);
+        if (m) { render(m); say(""); step(3, "done", "Done"); show("done"); return; }
+        say("The reading came back incomplete. Tap Read my palm to try again.", true);
+        step(3, "active", "Ready to read"); show("preview"); return;
+      } catch (e) {
+        var c = e && e.code, back = function (msg) { say(msg, true); step(3, "active", "Ready to read"); show("preview"); };
+        if (c === "cancelled") { say(""); step(3, "active", "Ready to read"); show("preview"); return; }
+        if (c === "image_rejected") return back("Claude could not use that photo. Try a different one.");
+        if (c === "rate_limited") return back("Too many readings in a short time. Wait a little and try again.");
+        if (c === "session_expired") return back("Sign in to Claude again, then try once more.");
+        if (c === "upstream_error" || c === "invalid_json" || c === "empty_completion" || c === "refused") return back("The reading did not come through. Tap Read my palm to try again.");
+        // not_granted and similar: continue with the on-device reading.
+      }
+    }
+    render(localModel(cur.seed, code));
+    say(""); step(3, "done", "Done"); show("done");
+  });
+
+  window.addEventListener("pagehide", stopStream);
+  show("idle");
+})();
+</script>
+</body>
+</html>
