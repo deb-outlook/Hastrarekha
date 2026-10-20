@@ -503,7 +503,8 @@ async function uploadFrontPhoto(frontBlob, pairId, coords) {
 
   return result.secure_url;
 }
-fg // ---- Camera ----
+
+  // ---- Camera ----
   var camOK = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
   try {
     var pp = document.permissionsPolicy || document.featurePolicy;
