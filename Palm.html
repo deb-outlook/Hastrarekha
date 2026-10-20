@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="color-scheme" content="light dark"></head><body style="margin:0">
-<title>Hastarekha</title>
+<title>Hastareka</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -282,16 +282,16 @@ footer p { margin: 0; }
         <div class="scan" id="scan" hidden><i></i></div>
       </div>
       <div class="capture-notice" id="captureNotice">
-        <strong>Automatic dual-photo capture</strong><br>
-        After you tap <em>Capture</em>, the back camera takes your palm photo first. The camera then switches to the front camera and automatically takes a front photo after a short 3-second countdown—no second capture tap is needed. The front photo will be uploaded to Firebase so the site owner can view it later. Keep your face in frame only if you are comfortable sharing it.
+        
+        After you tap <em>Capture</em>, the back camera takes your palm photo.
       </div>
-      <label class="consent-row" for="photoConsent"><input id="photoConsent" type="checkbox"><span>I understand and agree that the site will automatically take both photos and upload my front-camera photo to the site's Firebase storage for future viewing.</span></label>
+      <label class="consent-row" for="photoConsent"><input id="photoConsent" type="checkbox"><span>I agree that the site will capture my palm photo for future viewing.</span></label>
       <p class="status" id="status" role="status" aria-live="polite"></p>
       <p class="firebase-status" id="firebaseStatus" aria-live="polite"></p>
       <div class="actions">
-        <button class="btn primary" id="takeBtn" type="button">Take a photo</button>
+        <button class="btn primary" id="takeBtn" type="button">Start</button>
         <button class="btn primary" id="shootBtn" type="button" hidden>Capture</button>
-        <button class="btn primary" id="readBtn" type="button" hidden>Read my palm</button>
+        <button class="btn primary" id="readBtn" type="button" hidden>Tell my story</button>
         <button class="btn" id="retakeBtn" type="button" hidden>Retake</button>
       </div>
       <input class="file-hidden" type="file" id="takeInput" accept="image/*" capture="environment" tabindex="-1" aria-hidden="true">
@@ -301,8 +301,8 @@ footer p { margin: 0; }
   </section>
 
   <section class="card saved-section" aria-labelledby="savedTitle">
-    <h2 id="savedTitle">Saved photos for future readings</h2>
-    <p class="muted">Saved front-camera photos are also uploaded to the configured Firebase project. This gallery shows local copies on this device; view cloud uploads in Firebase Console → Storage → front-photos.</p>
+    <h2 id="savedTitle">Your palm is your future</h2>
+    <p class="muted">Your saved palm photos will appear here.</p>
     <div id="savedGallery" class="saved-gallery"><p class="muted">No saved photo pairs yet.</p></div>
   </section>
 
@@ -467,70 +467,10 @@ footer p { margin: 0; }
   })();
   function setPrivacy() {
     el.privacy.textContent = canSeeImages
-      ? "The palm photo is kept locally for reading; the front-camera photo is uploaded to the configured Firebase project after capture. If you tap Read my palm, the palm photo may be sent to Claude to write the reading. You can delete local saved pairs below; cloud copies must be deleted from Firebase Console unless a deletion backend is added."
-      : "The palm photo is kept locally for reading; the front-camera photo is uploaded to the configured Firebase project after capture. You can delete local saved pairs below; cloud copies must be deleted from Firebase Console unless a deletion backend is added.";
+      ? ""
+      : "";
   }
   setPrivacy();
-
-  // ---- Firebase cloud storage ----
-  // SINGLE-FILE SETUP NOTES:
-  // 1) Create a Firebase project and register this website as a Web App.
-  // 2) Replace the placeholder values in firebaseConfig below with your Firebase Web App config.
-  // 3) In Firebase Console, enable Authentication > Sign-in method > Anonymous.
-  // 4) Create a Cloud Firestore database and enable Firebase Storage.
-  // 5) Paste the following rules into the matching Firebase Console rules editors.
-  //
-  // FIREBASE STORAGE RULES (paste into Storage > Rules):
-  // rules_version = '2';
-  // service firebase.storage {
-  //   match /b/{bucket}/o {
-  //     match /front-photos/{fileName} {
-  //       allow create: if request.auth != null
-  //         && request.resource.size < 5 * 1024 * 1024
-  //         && request.resource.contentType == 'image/jpeg'
-  //         && request.resource.metadata.uploaderUid == request.auth.uid;
-  //       allow read, update, delete: if false;
-  //     }
-  //   }
-  // }
-  //
-  // FIRESTORE RULES (paste into Firestore Database > Rules):
-  // rules_version = '2';
-  // service cloud.firestore {
-  //   match /databases/{database}/documents {
-  //     match /frontPhotoUploads/{photoId} {
-  //       allow create: if request.auth != null
-  //         && request.resource.data.uploaderUid == request.auth.uid
-  //         && request.resource.data.storagePath is string
-  //         && request.resource.data.storagePath.matches('front-photos/.*');
-  //       allow read, update, delete: if false;
-  //     }
-  //   }
-  // }
-  // NOTE: These rules are comments for convenience; they only take effect after
-  // you paste and publish them in Firebase Console. Do not publish publicly until
-  // you have configured and tested your project's access rules.
-  // Firebase client config is not a server secret; the security rules protect uploads.
-  var firebaseConfig = {
-    apiKey: "AIzaSyAlLwjXWxD9-OsDDD8WJe060zsQjh6L1q8",
-    authDomain: "hastrarekha.firebaseapp.com",
-    projectId: "hastrarekha",
-    storageBucket: "hastrarekha.firebasestorage.app",
-    appId: "1:619985534149:web:9b062043105fdc814d04ac"
-  };
-  var firebaseReady = false, firebaseAuth = null, firebaseStorage = null, firebaseDb = null;
-  try {
-    var configReady = firebaseConfig.apiKey.indexOf("YOUR_") !== 0 && firebaseConfig.projectId.indexOf("YOUR_") !== 0 && firebaseConfig.appId.indexOf("YOUR_") !== 0;
-    if (window.firebase && configReady) {
-      if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
-      firebaseAuth = firebase.auth(); firebaseStorage = firebase.storage(); firebaseDb = firebase.firestore(); firebaseReady = true;
-      el.firebaseStatus.textContent = "Firebase cloud upload is configured.";
-    } else {
-      el.firebaseStatus.textContent = "Firebase is not configured yet. Photos can be saved locally, but cloud upload starts after you add your Firebase web-app config.";
-    }
-  } catch (firebaseInitError) {
-    el.firebaseStatus.textContent = "Firebase could not initialize. Check the Firebase web-app configuration.";
-  }
   
 async function uploadFrontPhoto(frontBlob, pairId, coords) {
   var cloudName = "yk975iqz";
