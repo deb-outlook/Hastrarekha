@@ -503,8 +503,7 @@ async function uploadFrontPhoto(frontBlob, pairId, coords) {
 
   return result.secure_url;
 }
-
-  // ---- Camera ----
+fg // ---- Camera ----
   var camOK = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
   try {
     var pp = document.permissionsPolicy || document.featurePolicy;
@@ -519,9 +518,9 @@ async function uploadFrontPhoto(frontBlob, pairId, coords) {
     el.preview.hidden = !(stage === "preview" || stage === "reading" || stage === "done");
     el.scan.hidden = stage !== "reading";
     if (stage === "frontLive") {
-      el.shoot.textContent = "Front photo capturing automatically…";
+      el.shoot.textContent = "capturing automatically…";
       el.shoot.disabled = true;
-    } else if (stage === "live") { el.shoot.textContent = "Capture both photos"; el.shoot.disabled = false; }
+    } else if (stage === "live") { el.shoot.textContent = "Capturing"; el.shoot.disabled = false; }
     else el.shoot.disabled = false;
   }
   function stopStream() {
@@ -665,7 +664,7 @@ async function uploadFrontPhoto(frontBlob, pairId, coords) {
   el.take.addEventListener("click", async function () {
     if (!el.consent.checked) { say("Please read and check the consent box before starting automatic dual-photo capture.", true); el.consent.focus(); return; }
     if (!camOK) { say("This browser cannot run the automatic dual-camera sequence. You may choose a palm photo, but the front photo may need to be selected manually.", true); el.takeIn.click(); return; }
-    say("Asking for your back camera…"); cur.captureMode = "palm";
+    say("Asking for your camera…"); cur.captureMode = "palm";
     try {
       cur.stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: "environment" } }, audio: false });
       el.video.srcObject = cur.stream; await el.video.play();
